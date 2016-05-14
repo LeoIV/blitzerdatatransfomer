@@ -5,7 +5,7 @@ A small java program to transform the datasets provided by http://www.cs.jhu.edu
 Just run the reviewtojson.jar with the following command [java -jar reviewtojson.jar "path_to_review_file.review"]. You'll get an json file with named "path_to_review_file.json"
 
 ## Third party software
-This small program uses the Jackson Core available under https://github.com/codehaus/jackson, licensed under Apache 2.0. Please read the following information provided by Codehaus
+This small program uses the Jackson Core available under https://github.com/codehaus/jackson, licensed under Apache 2.0. Please read the following information provided by Codehaus. Since I only used the Jackson Core, I attached a .zip file containing the whole Jackson Project to satisfy all legal claims.
 
 ### Notice
 This product currently only contains code developed by authors
@@ -17,6 +17,20 @@ For additional credits (generally to people who reported problems)
 see CREDITS file.
 
 ### License
+
+This copy of Jackson JSON processor is licensed under the
+Apache (Software) License, version 2.0 ("the License").
+See the License for details about distribution rights, and the
+specific rights regarding derivate works.
+
+You may obtain a copy of the License at:
+
+http://www.apache.org/licenses/
+
+A copy is also included with both the the downloadable source code package
+and jar that contains class bytecodes, as file "ASL 2.0". In both cases,
+that file should be located next to this file: in source distribution
+the location should be "release-notes/asl"; and in jar "META-INF/"
 
 ### Apache License V 2.0
 
