@@ -24,13 +24,13 @@ public class ReviewToJson {
 
 		}
 
-		if (args.length != 3) {
+		if (args.length < 2) {
 			System.out
-					.println("You have to provide the path to the positive.review, the negative.review file and the desired file name. An example call is java -jar reviewtojson.jar \"positive.review\" \"negative.review\" \"kitchen\"");
+					.print("Two or more parameters.\n1: The desired output file name\n2-n: file names of review files");
 			return;
 		}
 
-		String filename = args[2];
+		String filename = args[0];
 
 		BufferedReader br = null;
 
@@ -40,56 +40,29 @@ public class ReviewToJson {
 
 		try {
 
-			String currentLine;
-
-			br = new BufferedReader(new FileReader(args[0]));
-			System.out.println("File loaded: " + args[0]);
-			System.out.println("Extracting information");
-			while ((currentLine = br.readLine()) != null) {
-				String sentiment = currentLine.substring(
-						currentLine.length() - 8, currentLine.length()).equals(
-						"positive") ? "1" : "0";
-				currentLine = currentLine.substring(0,
-						currentLine.length() - 17);
-				String[] substr = currentLine.split("\\s+");
-				Item item = new Item();
-				item.sentiment = sentiment;
-				for (String s : substr) {
-					String[] ss = s.split(":");
-					if (item.word_count.containsKey(ss[0]))
-						item.word_count.put(ss[0], item.word_count.get(ss[0])
-								+ Integer.valueOf(ss[1]));
-					else
-						item.word_count.put(ss[0], Long.valueOf(ss[1]));
+			for (int i = 1; i < args.length; i++) {
+				String currentLine;
+				br = new BufferedReader(new FileReader(args[i]));
+				System.out.println("File loaded: " + args[i]);
+				System.out.println("Extracting information");
+				while ((currentLine = br.readLine()) != null) {
+					String sentiment = currentLine.substring(currentLine.length() - 8, currentLine.length())
+							.equals("positive") ? "1" : "0";
+					currentLine = currentLine.substring(0, currentLine.length() - 17);
+					String[] substr = currentLine.split("\\s+");
+					Item item = new Item();
+					item.sentiment = sentiment;
+					for (String s : substr) {
+						String[] ss = s.split(":");
+						if (item.word_count.containsKey(ss[0]))
+							item.word_count.put(ss[0], item.word_count.get(ss[0]) + Integer.valueOf(ss[1]));
+						else
+							item.word_count.put(ss[0], Long.valueOf(ss[1]));
+					}
+					resultList.add(item);
 				}
-				resultList.add(item);
+				br.close();
 			}
-			
-			br.close();
-			
-			br = new BufferedReader(new FileReader(args[1]));
-			System.out.println("File loaded: " + args[1]);
-			System.out.println("Extracting information");
-			while ((currentLine = br.readLine()) != null) {
-				String sentiment = currentLine.substring(
-						currentLine.length() - 8, currentLine.length()).equals(
-						"positive") ? "1" : "0";
-				currentLine = currentLine.substring(0,
-						currentLine.length() - 17);
-				String[] substr = currentLine.split("\\s+");
-				Item item = new Item();
-				item.sentiment = sentiment;
-				for (String s : substr) {
-					String[] ss = s.split(":");
-					if (item.word_count.containsKey(ss[0]))
-						item.word_count.put(ss[0], item.word_count.get(ss[0])
-								+ Integer.valueOf(ss[1]));
-					else
-						item.word_count.put(ss[0], Long.valueOf(ss[1]));
-				}
-				resultList.add(item);
-			}
-
 
 			System.out.println("Extraction done");
 			System.out.println("Saving in file " + args[0] + ".json");
